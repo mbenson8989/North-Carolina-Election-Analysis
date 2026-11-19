@@ -8,7 +8,7 @@
 
 Method developed by Morissa Benson (CD3 Vice Chair, Nebraska GOP). It began with her [Cedar County Audit](https://github.com/mbenson8989/Nebraska-Election-Analysis-/wiki/Cedar-Audit) on the [Nebraska Election Analysis wiki](https://github.com/mbenson8989/Nebraska-Election-Analysis-/wiki), the origin of the ΔG method and the reverse step used here. This wiki applies the same arithmetic, unchanged, to all 100 North Carolina counties, using **U.S. Senate** in place of governor (see the box above). Data: NC State Board of Elections (SBOE) election-results files (2022 official; 2026 unofficial) and SBOE voter-registration statistics for each election date; population from the Census Bureau. Compiled 19 Nov 2026.
 
-## Pages
+## Contents
 
 Start with the Cedar County audit in Nebraska. That is where the method began. The North Carolina pages then build up from one county (Wake) to the ten largest counties, to all 100 counties, and to the formula.
 

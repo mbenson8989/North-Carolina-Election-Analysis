@@ -20,7 +20,7 @@
 
 ## Blank template
 
-| Line | Item | 2022 | 2026* |
+| Line | Item | 2022 | 2026\* |
 |---|---|---|---|
 | 1 | Democratic U.S. Senate votes | ______ | ______ |
 | 2 | Total ballots cast (SBOE county figure) | ______ | ______ |
@@ -49,21 +49,21 @@
 
 ## Worked example: Wake
 
-| Line | Item | 2022 | 2026* |
+| Line | Item | 2022 | 2026\* |
 |---|---|---|---|
-| 1 | Democratic U.S. Senate votes | 281,367 | 381,791* |
-| 2 | Total ballots cast | 454,488 | 526,897* |
-| 3 | S | 61.91 | 72.46* |
+| 1 | Democratic U.S. Senate votes | 281,367 | 381,791\* |
+| 2 | Total ballots cast | 454,488 | 526,897\* |
+| 3 | S | 61.91 | 72.46\* |
 | 4 | Democratic registered | 291,321 | 286,985 |
 | 5 | Total registered | 813,767 | 869,883 |
 | 6 | R | 35.80 | 32.99 |
-| 7 | G | +26.11 | +39.47* |
-| 8 | ΔG | | +13.36* |
+| 7 | G | +26.11 | +39.47\* |
+| 8 | ΔG | | +13.36\* |
 | 9 | Registration-share change | | −2.81 |
 | 10 | Registration fell? | | Yes |
-| 11 | Residual | | 10.55* |
-| 12 | Implied extra votes | | +55,597* |
-| 13 | Registration-scaled gap | | +104,612* |
+| 11 | Residual | | 10.55\* |
+| 12 | Implied extra votes | | +55,597\* |
+| 13 | Registration-scaled gap | | +104,612\* |
 
 ## The North Carolina reverse-factoring constant (NC data only)
 

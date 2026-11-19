@@ -39,7 +39,7 @@ pages["Home"] = f"""# North Carolina 2022 vs 2026 U.S. Senate Race: ΔG Method
 
 Method developed by Morissa Benson (CD3 Vice Chair, Nebraska GOP). It began with her [Cedar County Audit]({CEDAR}) on the [Nebraska Election Analysis wiki]({NEWIKI}), the origin of the ΔG method and the reverse step used here. This wiki applies the same arithmetic, unchanged, to all 100 North Carolina counties, using **U.S. Senate** in place of governor (see the box above). Data: NC State Board of Elections (SBOE) election-results files (2022 official; 2026 unofficial) and SBOE voter-registration statistics for each election date; population from the Census Bureau. Compiled 19 Nov 2026.
 
-## Pages
+## Contents
 
 Start with the Cedar County audit in Nebraska. That is where the method began. The North Carolina pages then build up from one county (Wake) to the ten largest counties, to all 100 counties, and to the formula.
 
@@ -168,7 +168,7 @@ pages["Locked-North-Carolina-Formula"] = f"""# Locked North Carolina Formula
 
 ## Blank template
 
-| Line | Item | 2022 | 2026* |
+| Line | Item | 2022 | 2026\\* |
 |---|---|---|---|
 | 1 | Democratic U.S. Senate votes | ______ | ______ |
 | 2 | Total ballots cast (SBOE county figure) | ______ | ______ |
@@ -197,21 +197,21 @@ pages["Locked-North-Carolina-Formula"] = f"""# Locked North Carolina Formula
 
 ## Worked example: Wake
 
-| Line | Item | 2022 | 2026* |
+| Line | Item | 2022 | 2026\\* |
 |---|---|---|---|
-| 1 | Democratic U.S. Senate votes | {n(w.dem22)} | {n(w.dem26)}* |
-| 2 | Total ballots cast | {n(w.ballots22)} | {n(w.ballots26)}* |
-| 3 | S | {w.S22:.2f} | {w.S26:.2f}* |
+| 1 | Democratic U.S. Senate votes | {n(w.dem22)} | {n(w.dem26)}\\* |
+| 2 | Total ballots cast | {n(w.ballots22)} | {n(w.ballots26)}\\* |
+| 3 | S | {w.S22:.2f} | {w.S26:.2f}\\* |
 | 4 | Democratic registered | {n(w.regdem22)} | {n(w.regdem26)} |
 | 5 | Total registered | {n(w.regtot22)} | {n(w.regtot26)} |
 | 6 | R | {w.R22:.2f} | {w.R26:.2f} |
-| 7 | G | {sg(w.G22)} | {sg(w.G26)}* |
-| 8 | ΔG | | {sg(w.dG)}* |
+| 7 | G | {sg(w.G22)} | {sg(w.G26)}\\* |
+| 8 | ΔG | | {sg(w.dG)}\\* |
 | 9 | Registration-share change | | {sg(w.dR)} |
 | 10 | Registration fell? | | Yes |
-| 11 | Residual | | {w.residual:.2f}* |
-| 12 | Implied extra votes | | {sn(w.implied_votes)}* |
-| 13 | Registration-scaled gap | | {sn(w.regscaled_gap)}* |
+| 11 | Residual | | {w.residual:.2f}\\* |
+| 12 | Implied extra votes | | {sn(w.implied_votes)}\\* |
+| 13 | Registration-scaled gap | | {sn(w.regscaled_gap)}\\* |
 
 ## The North Carolina reverse-factoring constant (NC data only)
 
