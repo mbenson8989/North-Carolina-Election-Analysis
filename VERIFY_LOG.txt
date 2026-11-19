@@ -1,0 +1,16 @@
+NC U.S. Senate 2022 vs 2026 - verification log, run 2026-11-19 12:02 CST
+
+== VERIFICATION PASS 1 (scripts/verify_pass1.py)
+PASS 1: wiki checks 21; mismatches 0
+PASS 1: counties 100; fields per county 47; county-figure checks 4700; mismatches 0
+PASS 1: statewide/summary checks 42; mismatches 0; population sort largest-first: True
+exit 0
+
+== VERIFICATION PASS 2 (scripts/verify_pass2.py)
+PASS 2: counties 100; county-figure checks 4400; mismatches 0
+PASS 2: statewide/summary checks 28; mismatches 0
+PASS 2: wiki Reverse-Math all-county rows checked 100 (10 figures each); mismatches 0
+CROSS-SOURCE results_pct 2022: 300 county vote checks; differences 0 []
+CROSS-SOURCE results_pct 2026: 300 county vote checks; differences 3 [('HALIFAX', 'dem26', 11648, 11644), ('HALIFAX', 'rep26', 5827, 5815), ('HALIFAX', 'sentot26', 17767, 17751)]
+CROSS-SOURCE 2022 results_precinct_sort AllCounties (informational; absentee/early votes re-sorted to home precincts, not the canvass): 300 county vote checks; differences 192; statewide DEM 1,785,053 vs canvass 1,784,049, REP 1,905,754 vs 1,905,786
+exit 0
