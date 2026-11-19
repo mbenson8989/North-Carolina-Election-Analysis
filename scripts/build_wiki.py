@@ -152,6 +152,25 @@ pages["Locked-North-Carolina-Formula"] = f"""# Locked North Carolina Formula
 
 {BANNER}
 
+## Final North Carolina Equation
+
+Fitted from North Carolina's own 100 counties only (ordinary least squares, each county weighted equally). No other state's constant is used.
+
+**North Carolina equation (locked, primary): ΔG = {S['rev']['c']:.2f} + {S['rev']['k']:.3f} × (Democratic registration-share drop)**
+
+```text
+{('North Carolina equation (LOCKED, all ' + str(S['rev']['n']) + ' counties):').ljust(54)}ΔG = {S['rev']['c']:.2f} + {S['rev']['k']:.3f} × drop    R² = {S['rev']['r2']:.2f}, n = {S['rev']['n']}
+{('Narrowed fit (comparison, ' + str(S['rev_narrow']['n']) + ' counties):').ljust(54)}ΔG = {S['rev_narrow']['c']:.2f} + {S['rev_narrow']['k']:.3f} × drop    R² = {S['rev_narrow']['r2']:.2f}, n = {S['rev_narrow']['n']}
+```
+
+- **ΔG** = G 2026\\* − G 2022, where G = Democratic Senate votes ÷ total ballots cast × 100 − Democratic registration share (points).
+- **drop** = Democratic registration share 2022 − Democratic registration share 2026 (points; positive when the share fell).
+- **Constant** {S['rev']['c']:.2f} = expected ΔG in a county with no registration-share drop. **Multiplier** {S['rev']['k']:.3f} = added ΔG per point of registration-share drop.
+- The **locked equation is the all-county fit**, because the locked formula is applied to every county in the state (as Nebraska's is to all 93). The narrowed fit leaves out {', '.join(sorted(narrow_inf + [c for c in nonloss if c not in narrow_inf]))} (see [Counties narrowed out of the fit](#counties-narrowed-out-of-the-fit)) and is shown only to confirm they do not drive the result.
+- Because ΔG uses 2026 votes and ballots, the fitted numbers are based on **unofficial 2026\\* figures** and will be re-run after the State Board canvass.
+
+**Worked example, Wake:** drop = {w.R22:.2f} − {w.R26:.2f} = {-w.dR:.2f} points. Predicted ΔG = {S['rev']['c']:.2f} + {S['rev']['k']:.3f} × {-w.dR:.2f} = **{S['rev']['c'] + S['rev']['k'] * (-w.dR):.2f}**. Actual ΔG = **{sg(w.dG)}\\***. Deviation from the equation (actual − predicted) = **{sg(w.dG - (S['rev']['c'] + S['rev']['k'] * (-w.dR)))}\\*** points, so Wake sits just below the statewide line. (Computed at full precision. This deviation is the fit residual, not the registration-loss residual on line 11 of the template.)
+
 ## The equation
 
 - **S** (Democratic vote share) = Democratic U.S. Senate votes ÷ total ballots cast (SBOE county "ballots cast") × 100

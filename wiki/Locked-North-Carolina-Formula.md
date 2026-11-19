@@ -4,6 +4,25 @@
 >
 > **Race: U.S. Senate, not governor.** North Carolina elects its governor in presidential years (2020, 2024), so there was no governor race in 2022 or 2026. The top statewide race in both years was U.S. Senate (2022: Cheri Beasley (D) vs. Ted Budd (R); 2026: Roy Cooper (D) vs. Michael Whatley (R)), and it is used here in place of governor. Votes are votes for the Democratic Senate candidate, not a count of registered Democrats who voted. Registration is the SBOE voter_stats file for each election date (all parties: DEM, REP, UNA, LIB, GRE). These pages measure a pattern; they make no claim about intent, fraud or cause.
 
+## Final North Carolina Equation
+
+Fitted from North Carolina's own 100 counties only (ordinary least squares, each county weighted equally). No other state's constant is used.
+
+**North Carolina equation (locked, primary): ΔG = 11.83 + 0.633 × (Democratic registration-share drop)**
+
+```text
+North Carolina equation (LOCKED, all 100 counties):   ΔG = 11.83 + 0.633 × drop    R² = 0.41, n = 100
+Narrowed fit (comparison, 93 counties):               ΔG = 11.71 + 0.648 × drop    R² = 0.47, n = 93
+```
+
+- **ΔG** = G 2026\* − G 2022, where G = Democratic Senate votes ÷ total ballots cast × 100 − Democratic registration share (points).
+- **drop** = Democratic registration share 2022 − Democratic registration share 2026 (points; positive when the share fell).
+- **Constant** 11.83 = expected ΔG in a county with no registration-share drop. **Multiplier** 0.633 = added ΔG per point of registration-share drop.
+- The **locked equation is the all-county fit**, because the locked formula is applied to every county in the state (as Nebraska's is to all 93). The narrowed fit leaves out Brunswick, Cabarrus, Harnett, Johnston, Nash, Orange, Warren (see [Counties narrowed out of the fit](#counties-narrowed-out-of-the-fit)) and is shown only to confirm they do not drive the result.
+- Because ΔG uses 2026 votes and ballots, the fitted numbers are based on **unofficial 2026\* figures** and will be re-run after the State Board canvass.
+
+**Worked example, Wake:** drop = 35.80 − 32.99 = 2.81 points. Predicted ΔG = 11.83 + 0.633 × 2.81 = **13.60**. Actual ΔG = **+13.36\***. Deviation from the equation (actual − predicted) = **−0.24\*** points, so Wake sits just below the statewide line. (Computed at full precision. This deviation is the fit residual, not the registration-loss residual on line 11 of the template.)
+
 ## The equation
 
 - **S** (Democratic vote share) = Democratic U.S. Senate votes ÷ total ballots cast (SBOE county "ballots cast") × 100
