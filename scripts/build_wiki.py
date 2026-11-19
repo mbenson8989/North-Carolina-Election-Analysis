@@ -1,4 +1,4 @@
-import json, os
+import json, os, re
 import pandas as pd
 H = os.path.dirname(os.path.abspath(__file__)); D = f"{H}/../data"; W = f"{H}/../wiki"
 df = pd.read_csv(f"{D}/nc_senate_2022_2026_by_population.csv"); S = json.load(open(f"{D}/summary.json"))
@@ -48,6 +48,7 @@ Start with the Cedar County audit in Nebraska. That is where the method began. T
 3. [Locked North Carolina Formula](Locked-North-Carolina-Formula): the equation, a blank fill-in template, and the North Carolina constant (computed from NC data only)
 4. [Floor and Ceiling Counties](Floor-and-Ceiling): the counties at the top and bottom, the Texas-style over-ballot check, regional constants and counties narrowed out
 5. [Graphs](Graphs): slope chart, ΔG by population, stacked bars, share-vs-gain bars, residual bars, scatter, constant fit, over-ballot check
+6. [North Carolina County PDF Information](North-Carolina-County-PDF-Information): all 100 counties, Democratic registration, Democratic Senate votes and total ballots, 2022 vs 2026\\* (downloadable PDF)
 
 ## Statewide at a glance
 
@@ -383,6 +384,64 @@ pages["Graphs"] = f"""# Graphs
 
 {img("NC_Wake_residual_steps.png", "Wake residual steps", f"Wake reverse math: ΔG {sg(w.dG)}\\* = {w.dS:.2f}-point vote-share gain\\* + {-w.dR:.2f}-point registration-share loss.")}
 {rel("Home", "Reverse-Math", "Floor-and-Ceiling", "Locked-North-Carolina-Formula")}"""
+# ---------------- COUNTY PDF INFORMATION
+import subprocess as _sp
+PDFNAME = "North_Carolina_100_County_Democratic_Registration_and_Vote_Change.pdf"
+_pdfpath = f"{H}/../pdf/{PDFNAME}"
+NPAGES = int(re.search(r"Pages:\s+(\d+)", _sp.run(["pdfinfo", _pdfpath], capture_output=True, text=True).stdout).group(1))
+pdfv = open(f"{D}/pdf_verify.txt").read().strip() if os.path.exists(f"{D}/pdf_verify.txt") else "PENDING"
+top = df.sort_values(["R26", "county"], ascending=[False, True]).iloc[0]
+rose = df.loc[df.regdem26 > df.regdem22, "county"].tolist()
+pages["North-Carolina-County-PDF-Information"] = f"""# North Carolina County PDF Information
+
+{BANNER}
+
+This {NPAGES}-page PDF covers all 100 North Carolina counties, 2022 vs 2026\\*, U.S. Senate race (substituted for governor). It is modeled on Nebraska's [93-County Summary PDF]({NEWIKI}/93-County%E2%80%90summary%E2%80%90pdf): same column order, same two tables, statewide totals row at the bottom of each table.
+
+**[Download the North Carolina 100-County PDF](https://raw.githubusercontent.com/mbenson8989/North-Carolina-Election-Analysis/main/pdf/{PDFNAME})** · [View it on GitHub](https://github.com/mbenson8989/North-Carolina-Election-Analysis/blob/main/pdf/{PDFNAME})
+
+## Sort order
+
+Counties are sorted by **2026 Democratic share of registration** (Democratic registered voters ÷ all registered voters, SBOE voter_stats for 11/03/2026), highest first. {top.county} is first ({top.R26:.1f}%). The last row of each table is the statewide total. Rows shaded blue are counties where Democratic registration rose ({', '.join(rose)}); no county's Democratic Senate votes fell.
+
+## Table 1 columns (pages 1–2)
+
+| Column | Meaning |
+|---|---|
+| County | County name |
+| Dem Reg Share 2026 % | Democratic registered voters ÷ all registered voters, 11/03/2026 |
+| Dem Reg 2022 / Dem Reg 2026 | Registered Democrats, SBOE voter_stats for 11/08/2022 and 11/03/2026 |
+| Reg Change # / Reg Change % | 2026 minus 2022, and that change as a percent of 2022 |
+| Dem Senate Votes 2022 / 2026\\* | Votes for the Democratic U.S. Senate candidate (Beasley 2022; Cooper 2026\\*) |
+| Vote Change # / Vote Change % | 2026\\* minus 2022, and that change as a percent of 2022 |
+| Total Ballots 2022 / 2026\\* | Total ballots cast in the county (SBOE results site) |
+| Ballot Change # / Ballot Change % | 2026\\* minus 2022, and that change as a percent of 2022 |
+
+## Table 2 columns (pages 3–4)
+
+| Column | Meaning |
+|---|---|
+| Dem Share of Ballots 2022 % / 2026\\* % | Democratic Senate votes ÷ total ballots cast |
+| Change (pts) | 2026\\* share minus 2022 share, percentage points (from unrounded shares) |
+| Dem Share of Registration 2022 % / 2026 % | Democratic registered voters ÷ all registered voters |
+| Total Registered 2022 / 2026 | All registered voters, all parties (DEM, REP, UNA, LIB, GRE) |
+
+Percentages are rounded to one decimal place and point changes to two.
+
+## Statewide totals row
+
+| Dem Reg Share 2026 | Dem Reg 2022 | Dem Reg 2026 | Reg Change | Dem Senate Votes 2022 | 2026\\* | Vote Change | Total Ballots 2022 | 2026\\* | Ballot Change |
+|---|---|---|---|---|---|---|---|---|---|
+| {S['R26']:.1f}% | {n(S['regdem22'])} | {n(S['regdem26'])} | {sn(S['regdem26']-S['regdem22'])} ({sg((S['regdem26']/S['regdem22']-1)*100,1)}%) | {n(S['dem22'])} | {n(S['dem26'])}\\* | {sn(S['dem26']-S['dem22'])}\\* ({sg((S['dem26']/S['dem22']-1)*100,1)}%) | {n(S['ballots22'])} | {n(S['ballots26'])}\\* | {sn(S['ballots26']-S['ballots22'])}\\* ({sg((S['ballots26']/S['ballots22']-1)*100,1)}%) |
+
+## Verification
+
+{pdfv}
+
+## Sources
+
+NC State Board of Elections: results-site county data for 11/08/2022 (OFFICIAL) and 11/03/2026 (UNOFFICIAL\\*), and voter_stats registration files for each election date, all downloaded 19 Nov 2026. Full list in [SOURCES.md](https://github.com/mbenson8989/North-Carolina-Election-Analysis/blob/main/SOURCES.md).
+{rel("Home", "Reverse-Math", "Locked-North-Carolina-Formula", "Floor-and-Ceiling", "Graphs")}"""
 ver = json.load(open(f"{D}/verify_summary.json")) if os.path.exists(f"{D}/verify_summary.json") else {"p1": "PENDING", "p2": "PENDING"}
 for k, v in pages.items():
     v = v.replace("{VER1}", ver["p1"]).replace("{VER2}", ver["p2"])

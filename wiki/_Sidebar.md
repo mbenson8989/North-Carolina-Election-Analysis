@@ -8,5 +8,6 @@ U.S. Senate 2022 vs 2026 (NC had no governor race those years). 2026 figures uno
 4. [Bottom-Up Reverse Math](https://github.com/mbenson8989/North-Carolina-Election-Analysis/wiki/Reverse-Math)
 5. [Locked North Carolina Formula](https://github.com/mbenson8989/North-Carolina-Election-Analysis/wiki/Locked-North-Carolina-Formula)
 6. [Graphs](https://github.com/mbenson8989/North-Carolina-Election-Analysis/wiki/Graphs)
+7. [North Carolina County PDF Information](https://github.com/mbenson8989/North-Carolina-Election-Analysis/wiki/North-Carolina-County-PDF-Information)
 
 [Data, scripts and verification log](https://github.com/mbenson8989/North-Carolina-Election-Analysis)

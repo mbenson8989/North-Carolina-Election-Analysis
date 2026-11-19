@@ -17,6 +17,7 @@ Start with the Cedar County audit in Nebraska. That is where the method began. T
 3. [Locked North Carolina Formula](Locked-North-Carolina-Formula): the equation, a blank fill-in template, and the North Carolina constant (computed from NC data only)
 4. [Floor and Ceiling Counties](Floor-and-Ceiling): the counties at the top and bottom, the Texas-style over-ballot check, regional constants and counties narrowed out
 5. [Graphs](Graphs): slope chart, ΔG by population, stacked bars, share-vs-gain bars, residual bars, scatter, constant fit, over-ballot check
+6. [North Carolina County PDF Information](North-Carolina-County-PDF-Information): all 100 counties, Democratic registration, Democratic Senate votes and total ballots, 2022 vs 2026\* (downloadable PDF)
 
 ## Statewide at a glance
 
