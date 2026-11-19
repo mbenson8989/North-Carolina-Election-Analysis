@@ -4,7 +4,7 @@
 >
 > **Race: U.S. Senate, not governor.** North Carolina elects its governor in presidential years (2020, 2024), so there was no governor race in 2022 or 2026. The top statewide race in both years was U.S. Senate (2022: Cheri Beasley (D) vs. Ted Budd (R); 2026: Roy Cooper (D) vs. Michael Whatley (R)), and it is used here in place of governor. Votes are votes for the Democratic Senate candidate, not a count of registered Democrats who voted. Registration is the SBOE voter_stats file for each election date (all parties: DEM, REP, UNA, LIB, GRE). These pages measure a pattern; they make no claim about intent, fraud or cause.
 
-This 4-page PDF covers all 100 North Carolina counties, 2022 vs 2026\*, U.S. Senate race (substituted for governor). It is modeled on Nebraska's [93-County Summary PDF](https://github.com/mbenson8989/Nebraska-Election-Analysis-/wiki/93-County%E2%80%90summary%E2%80%90pdf): same column order, same two tables, statewide totals row at the bottom of each table.
+This 4-page PDF covers all 100 North Carolina counties, 2022 vs 2026\*, U.S. Senate race (substituted for governor). It is modeled on Nebraska's [93-County Summary PDF](https://github.com/mbenson8989/Nebraska-Election-Analysis-/wiki/93-County-PDF-Information): same column order, same two tables, statewide totals row at the bottom of each table.
 
 **[Download the North Carolina 100-County PDF](https://raw.githubusercontent.com/mbenson8989/North-Carolina-Election-Analysis/main/pdf/North_Carolina_100_County_Democratic_Registration_and_Vote_Change.pdf)** · [View it on GitHub](https://github.com/mbenson8989/North-Carolina-Election-Analysis/blob/main/pdf/North_Carolina_100_County_Democratic_Registration_and_Vote_Change.pdf)
 

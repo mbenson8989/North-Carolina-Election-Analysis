@@ -396,7 +396,7 @@ pages["North-Carolina-County-PDF-Information"] = f"""# North Carolina County PDF
 
 {BANNER}
 
-This {NPAGES}-page PDF covers all 100 North Carolina counties, 2022 vs 2026\\*, U.S. Senate race (substituted for governor). It is modeled on Nebraska's [93-County Summary PDF]({NEWIKI}/93-County%E2%80%90summary%E2%80%90pdf): same column order, same two tables, statewide totals row at the bottom of each table.
+This {NPAGES}-page PDF covers all 100 North Carolina counties, 2022 vs 2026\\*, U.S. Senate race (substituted for governor). It is modeled on Nebraska's [93-County Summary PDF]({NEWIKI}/93-County-PDF-Information): same column order, same two tables, statewide totals row at the bottom of each table.
 
 **[Download the North Carolina 100-County PDF](https://raw.githubusercontent.com/mbenson8989/North-Carolina-Election-Analysis/main/pdf/{PDFNAME})** · [View it on GitHub](https://github.com/mbenson8989/North-Carolina-Election-Analysis/blob/main/pdf/{PDFNAME})
 
