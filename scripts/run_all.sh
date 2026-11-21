@@ -7,6 +7,7 @@ for z in results_pct_20221108 results_pct_20261103 voter_stats_20221108 voter_st
   [ -f $R/$z.txt ] || unzip -o -q $R/$z.zip -d $R; done
 python3 build_data.py > /dev/null
 python3 analysis.py > /dev/null
+python3 share_fit.py > /dev/null
 python3 charts.py > /dev/null
 python3 build_pdf.py > /dev/null
 python3 verify_pdf_raw.py

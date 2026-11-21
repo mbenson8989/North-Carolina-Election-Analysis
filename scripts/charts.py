@@ -103,3 +103,17 @@ ax.set_ylabel("points"); ax.set_title(f"Wake County reverse math: ΔG {w.dG:+.2f
 save(fig, "NC_Wake_residual_steps.png")
 json.dump(S, open(f"{D}/summary.json", "w"), indent=1, default=float)
 print("charts ok", sorted(os.listdir(O)))
+
+# share version S = m*(D/100)+b, from share_fit.json (raw-file recompute)
+SF = json.load(open(f"{D}/share_fit.json"))
+fig, ax = plt.subplots(figsize=(11, 6.5))
+for y, col, mk in (("22", "#1f4e9c", "o"), ("26", "#d9822b", "^")):
+    f = SF[f"y20{y}"]; xs = [v[f"D{y}"] for v in SF["county"].values()]; ys = [v[f"S{y}"] for v in SF["county"].values()]
+    ax.scatter(xs, ys, s=18, c=col, marker=mk, alpha=.75, label=f"20{y}{'*' if y == '26' else ''} counties")
+    xx = np.linspace(min(xs), max(xs), 50)
+    ax.plot(xx, f["m"] * xx / 100 + f["b"], c=col, lw=2, label=f"20{y}{'*' if y == '26' else ''}: S = {f['m']:.2f} × (D/100) + {f['b']:.2f}  (R² {f['r2']:.2f}, mean |resid| {f['mae']:.2f})")
+for c in ("Orange", "Durham", "Wake"):
+    v = SF["county"][c]; ax.annotate(c, (v["D26"], v["S26"]), fontsize=8, xytext=(4, 2), textcoords="offset points")
+ax.set_xlabel("D = Democratic registration share (%)"); ax.set_ylabel("S = Dem share of ballots − Dem registration share (pts)")
+ax.set_title("North Carolina share version, all 100 counties, U.S. Senate (2026* unofficial)"); ax.legend(fontsize=8)
+save(fig, "NC_Share_Version_S_vs_D.png")

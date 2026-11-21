@@ -95,16 +95,31 @@ Recomputed from North Carolina's own 100 counties; no other state's constant is 
 
 **Locked North Carolina formula: ΔG ≈ 11.83 + 0.633 × (registration-share drop)\*.** 95% CI for c: 10.94 to 12.71; for k: 0.481 to 0.785. Read it this way: a county with no registration-share drop would be expected to show a ΔG of about 11.8 points; each point of registration-share drop adds about 0.63 points. The intercept is the statewide swing in Democratic vote share that registration change does not explain. Because k is below 1, ΔG grows less than one-for-one with registration loss.
 
-### Forward surplus fit (for comparison with the other state wikis)
+### Share version: S = m × (D/100) + b (secondary, for comparison with the other state wikis)
 
-G = m × (R ÷ 100) + b, each year, all 100 counties, equal weight.
+This is **not** the locked North Carolina equation. The locked equation is the change version at the top of this page, ΔG = 11.83 + 0.633 × (registration-share drop). The share version uses the same definitions as the Kansas, Texas and Michigan Locked pages:
 
-| Year | m (SE) | b | R² | Residual SE | Within ±1 / ±2 / ±3 pts | m, b weighted by ballots |
-|---|---|---|---|---|---|---|
-| 2022 | -25.4 (6.2) | +13.89 | 0.15 | 8.33 | 11% / 26% / 34% | +20.8, +6.70 |
-| 2026\* | -12.6 (6.7) | +24.18 | 0.04 | 7.86 | 9% / 13% / 26% | +35.0, +18.09 |
+- **S** = Democratic surplus G = Democratic U.S. Senate votes ÷ total ballots cast × 100 − Democratic registration share (points)
+- **D** = Democratic registration share (Democratic registered ÷ all registered × 100, SBOE voter_stats for that election date), same year as S
+- Ordinary least squares, all 100 counties, each county weighted equally
 
-The forward fit is weak in North Carolina (registration share explains 15% of county differences in G in 2022 and 4% in 2026\*), and the slope changes sign when weighted by ballots, so m is not a stable constant here. The change fit ΔG = m × (R2022 ÷ 100) + b gives m = 8.84, b = +12.24 (R² 0.23).
+| Fit | n | North Carolina share equation | m (SE) | R² | Mean absolute residual (pts) | Residual SE | Within ±3 pts | m, b weighted by ballots |
+|---|---|---|---|---|---|---|---|---|
+| 2022 | 100 | S = -25.39 × (D/100) + 13.89 | -25.39 (6.15) | 0.148 | 6.18 | 8.33 | 34% | +20.8, +6.70 |
+| **2026\*** | 100 | **S\* = -12.62 × (D/100) + 24.18** | -12.62 (6.65) | 0.035 | 6.30 | 7.86 | 26% | +35.0, +18.09 |
+| Pooled, both years | 200 | S = -30.78 × (D/100) + 22.41 | -30.78 (5.81) | 0.124 | 8.53 | 10.66 | 23% | |
+| Narrowed 2026\* (reference) | 93 | S\* = -13.70 × (D/100) + 24.03 | -13.70 (6.80) | 0.043 | 6.10 | 7.71 | 27% | |
+| Narrowed 2022 (reference) | 93 | S = -27.16 × (D/100) + 13.99 | -27.16 (6.17) | 0.176 | 6.01 | 8.05 | 32% | |
+
+Narrowed fits leave out the same 7 counties as the narrowed ΔG fit (Nash, Orange, Warren, Cabarrus, Johnston, Brunswick, Harnett). Largest residuals (actual S above the line): 2022 Orange +27.98, Durham +26.93, Wake +21.31; 2026\* Orange +20.31, Durham +19.54, Wake +19.45\*. Furthest below the line in 2026\*: Tyrrell -13.17, Anson -11.79, Hyde -11.75\*.
+
+**Worked example, Wake 2026\*:** D = 32.9912. Fitted S\* = -12.6212 × (32.9912 ÷ 100) + 24.1835 = -4.1639 + 24.1835 = 20.02\*. Actual S\* = 39.47\* (Wake's G 2026\* on the slope chart). Residual = +19.45\*.
+
+**How well it fits:** weakly. Registration share explains 15% of county differences in S in 2022 and 4% in 2026\*, the average county sits 6.3 points off the 2026\* line, and the slope changes sign when weighted by ballots. So m is not a stable constant in North Carolina, which is why the change version is the locked formula. The change fit ΔG = m × (R2022 ÷ 100) + b gives m = 8.84, b = +12.24 (R² 0.23).
+
+**Checked against the raw files:** `scripts/share_fit.py` re-reads the raw SBOE results and voter_stats files (not the summary tables) and recomputes every county's S and D and every fit above. Its 2022 and 2026\* m, b, R² and residual SE match the earlier saved fit, and every county's S and D matches the values plotted on the [Graphs](Graphs) page to within 0.0000001 points. 2026 figures are unofficial\*.
+
+![Share version, S against D, 2022 and 2026*](https://raw.githubusercontent.com/mbenson8989/North-Carolina-Election-Analysis/main/charts/NC_Share_Version_S_vs_D.png)
 
 ### Regional constants
 

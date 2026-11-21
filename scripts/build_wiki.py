@@ -149,6 +149,7 @@ zc = S["zone_constants"]; bc = S["broad_constants"]
 zrows = "\n".join(f"| {z} | {v['n']} | {v['c']:+.2f} | {v['k']:.3f} | {v['r2']:.2f} | {sg(v['mean_dG'])} | {sg(v['mean_fit_resid'])} |" for z, v in sorted(zc.items(), key=lambda kv: -kv[1]['mean_fit_resid']))
 brows = "\n".join(f"| {z} | {v['n']} | {v['c']:+.2f} | {v['k']:.3f} | {v['r2']:.2f} | {sg(v['mean_dG'])} | {sg(v['mean_fit_resid'])} |" for z, v in bc.items())
 f22, f26 = S["fwd22"], S["fwd26"]
+sf = json.load(open(f"{D}/share_fit.json")); wk = sf["wake"]; rv = S["rev"]
 pages["Locked-North-Carolina-Formula"] = f"""# Locked North Carolina Formula
 
 {BANNER}
@@ -244,16 +245,31 @@ Recomputed from North Carolina's own 100 counties; no other state's constant is 
 
 **Locked North Carolina formula: ΔG ≈ {S['rev']['c']:.2f} + {S['rev']['k']:.3f} × (registration-share drop)\\*.** 95% CI for c: {S['rev']['c_ci'][0]:.2f} to {S['rev']['c_ci'][1]:.2f}; for k: {S['rev']['k_ci'][0]:.3f} to {S['rev']['k_ci'][1]:.3f}. Read it this way: a county with no registration-share drop would be expected to show a ΔG of about {S['rev']['c']:.1f} points; each point of registration-share drop adds about {S['rev']['k']:.2f} points. The intercept is the statewide swing in Democratic vote share that registration change does not explain. Because k is below 1, ΔG grows less than one-for-one with registration loss.
 
-### Forward surplus fit (for comparison with the other state wikis)
+### Share version: S = m × (D/100) + b (secondary, for comparison with the other state wikis)
 
-G = m × (R ÷ 100) + b, each year, all 100 counties, equal weight.
+This is **not** the locked North Carolina equation. The locked equation is the change version at the top of this page, ΔG = {rv['c']:.2f} + {rv['k']:.3f} × (registration-share drop). The share version uses the same definitions as the Kansas, Texas and Michigan Locked pages:
 
-| Year | m (SE) | b | R² | Residual SE | Within ±1 / ±2 / ±3 pts | m, b weighted by ballots |
-|---|---|---|---|---|---|---|
-| 2022 | {f22['m']:.1f} ({f22['m_se']:.1f}) | {f22['b']:+.2f} | {f22['r2']:.2f} | {f22['rse']:.2f} | {f22['within1']:.0%} / {f22['within2']:.0%} / {f22['within3']:.0%} | {f22['m_w']:+.1f}, {f22['b_w']:+.2f} |
-| 2026\\* | {f26['m']:.1f} ({f26['m_se']:.1f}) | {f26['b']:+.2f} | {f26['r2']:.2f} | {f26['rse']:.2f} | {f26['within1']:.0%} / {f26['within2']:.0%} / {f26['within3']:.0%} | {f26['m_w']:+.1f}, {f26['b_w']:+.2f} |
+- **S** = Democratic surplus G = Democratic U.S. Senate votes ÷ total ballots cast × 100 − Democratic registration share (points)
+- **D** = Democratic registration share (Democratic registered ÷ all registered × 100, SBOE voter_stats for that election date), same year as S
+- Ordinary least squares, all 100 counties, each county weighted equally
 
-The forward fit is weak in North Carolina (registration share explains {f22['r2']:.0%} of county differences in G in 2022 and {f26['r2']:.0%} in 2026\\*), and the slope changes sign when weighted by ballots, so m is not a stable constant here. The change fit ΔG = m × (R2022 ÷ 100) + b gives m = {S['chg']['m']:.2f}, b = {S['chg']['b']:+.2f} (R² {S['chg']['r2']:.2f}).
+| Fit | n | North Carolina share equation | m (SE) | R² | Mean absolute residual (pts) | Residual SE | Within ±3 pts | m, b weighted by ballots |
+|---|---|---|---|---|---|---|---|---|
+| 2022 | {sf['y2022']['n']} | S = {sf['y2022']['m']:.2f} × (D/100) + {sf['y2022']['b']:.2f} | {sf['y2022']['m']:.2f} ({sf['y2022']['m_se']:.2f}) | {sf['y2022']['r2']:.3f} | {sf['y2022']['mae']:.2f} | {sf['y2022']['rse']:.2f} | {sf['y2022']['within3']:.0%} | {f22['m_w']:+.1f}, {f22['b_w']:+.2f} |
+| **2026\\*** | {sf['y2026']['n']} | **S\\* = {sf['y2026']['m']:.2f} × (D/100) + {sf['y2026']['b']:.2f}** | {sf['y2026']['m']:.2f} ({sf['y2026']['m_se']:.2f}) | {sf['y2026']['r2']:.3f} | {sf['y2026']['mae']:.2f} | {sf['y2026']['rse']:.2f} | {sf['y2026']['within3']:.0%} | {f26['m_w']:+.1f}, {f26['b_w']:+.2f} |
+| Pooled, both years | {sf['pooled']['n']} | S = {sf['pooled']['m']:.2f} × (D/100) + {sf['pooled']['b']:.2f} | {sf['pooled']['m']:.2f} ({sf['pooled']['m_se']:.2f}) | {sf['pooled']['r2']:.3f} | {sf['pooled']['mae']:.2f} | {sf['pooled']['rse']:.2f} | {sf['pooled']['within3']:.0%} | |
+| Narrowed 2026\\* (reference) | {sf['y2026_narrow93']['n']} | S\\* = {sf['y2026_narrow93']['m']:.2f} × (D/100) + {sf['y2026_narrow93']['b']:.2f} | {sf['y2026_narrow93']['m']:.2f} ({sf['y2026_narrow93']['m_se']:.2f}) | {sf['y2026_narrow93']['r2']:.3f} | {sf['y2026_narrow93']['mae']:.2f} | {sf['y2026_narrow93']['rse']:.2f} | {sf['y2026_narrow93']['within3']:.0%} | |
+| Narrowed 2022 (reference) | {sf['y2022_narrow93']['n']} | S = {sf['y2022_narrow93']['m']:.2f} × (D/100) + {sf['y2022_narrow93']['b']:.2f} | {sf['y2022_narrow93']['m']:.2f} ({sf['y2022_narrow93']['m_se']:.2f}) | {sf['y2022_narrow93']['r2']:.3f} | {sf['y2022_narrow93']['mae']:.2f} | {sf['y2022_narrow93']['rse']:.2f} | {sf['y2022_narrow93']['within3']:.0%} | |
+
+Narrowed fits leave out the same 7 counties as the narrowed ΔG fit (Nash, Orange, Warren, Cabarrus, Johnston, Brunswick, Harnett). Largest residuals (actual S above the line): 2022 {', '.join(f"{x['county']} {x['res']:+.2f}" for x in sf['y2022']['top_pos'])}; 2026\\* {', '.join(f"{x['county']} {x['res']:+.2f}" for x in sf['y2026']['top_pos'])}\\*. Furthest below the line in 2026\\*: {', '.join(f"{x['county']} {x['res']:+.2f}" for x in sf['y2026']['top_neg'])}\\*.
+
+**Worked example, Wake 2026\\*:** D = {wk['D26']:.4f}. Fitted S\\* = {sf['y2026']['m']:.4f} × ({wk['D26']:.4f} ÷ 100) + {sf['y2026']['b']:.4f} = {sf['y2026']['m']*wk['D26']/100:+.4f} + {sf['y2026']['b']:.4f} = {wk['fit']:.2f}\\*. Actual S\\* = {wk['S26']:.2f}\\* (Wake's G 2026\\* on the slope chart). Residual = {wk['res']:+.2f}\\*.
+
+**How well it fits:** weakly. Registration share explains {sf['y2022']['r2']:.0%} of county differences in S in 2022 and {sf['y2026']['r2']:.0%} in 2026\\*, the average county sits {sf['y2026']['mae']:.1f} points off the 2026\\* line, and the slope changes sign when weighted by ballots. So m is not a stable constant in North Carolina, which is why the change version is the locked formula. The change fit ΔG = m × (R2022 ÷ 100) + b gives m = {S['chg']['m']:.2f}, b = {S['chg']['b']:+.2f} (R² {S['chg']['r2']:.2f}).
+
+**Checked against the raw files:** `scripts/share_fit.py` re-reads the raw SBOE results and voter_stats files (not the summary tables) and recomputes every county's S and D and every fit above. Its 2022 and 2026\\* m, b, R² and residual SE match the earlier saved fit, and every county's S and D matches the values plotted on the [Graphs](Graphs) page to within 0.0000001 points. 2026 figures are unofficial\\*.
+
+![Share version, S against D, 2022 and 2026*](https://raw.githubusercontent.com/mbenson8989/North-Carolina-Election-Analysis/main/charts/NC_Share_Version_S_vs_D.png)
 
 ### Regional constants
 
